@@ -1,426 +1,3057 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>موقع زيد النصيرات</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+<meta name="description" content="موقع زيد النصيرات - قصص، خيال وإبداع">
+<title>موقع زيد النصيرات | V4</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-/* ===== عام ===== */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo','Tahoma',sans-serif;scroll-behavior:smooth;}
-a{text-decoration:none;color:inherit;}
-
-/* ===== شاشة تسجيل الدخول ===== */
-#loginScreen{
-  position:fixed;inset:0;z-index:9000;
-  display:flex;align-items:center;justify-content:center;
-  background:#111;color:#fff;
+/* =========================
+   V4 - إعدادات عامة
+========================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Cairo','Tahoma',sans-serif;
+  scroll-behavior:smooth;
 }
-#bg-video{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  object-fit:cover;z-index:-1;filter:brightness(0.45);
-}
-body.light-theme #bg-video{filter:brightness(0.75);}
 
-/* سبينر */
+:root{
+  --pink:#e0558f;
+  --pink-dark:#c73f76;
+  --pink-light:#f8cdda;
+  --bg1:#111936;
+  --bg2:#45234f;
+  --card:rgba(255,255,255,.10);
+  --card-hover:rgba(255,255,255,.15);
+  --text:#fff;
+  --muted:#ddd;
+  --border:rgba(255,255,255,.15);
+}
+
+body{
+  color:var(--text);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body.light-theme{
+  --bg1:#edf1ff;
+  --bg2:#ffe5f0;
+  --card:rgba(255,255,255,.72);
+  --card-hover:rgba(255,255,255,.9);
+  --text:#222;
+  --muted:#555;
+  --border:rgba(0,0,0,.10);
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+/* =========================
+   شاشة التحميل
+========================= */
 #loader{
-  position:fixed;inset:0;background:#1a1a2e;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;color:#fff;font-size:20px;transition:opacity .6s;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#10142b;
+  color:#fff;
+  transition:opacity .6s ease;
 }
+
 .spinner{
-  border:6px solid rgba(255,255,255,0.2);
-  border-top-color:#f8cdda;border-radius:50%;
-  width:60px;height:60px;
-  animation:spin 1s linear infinite;margin-bottom:15px;
+  width:62px;
+  height:62px;
+  border:6px solid rgba(255,255,255,.18);
+  border-top-color:var(--pink-light);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:16px;
 }
-@keyframes spin{to{transform:rotate(360deg);}}
 
-/* بطاقة تسجيل الدخول */
-.login-card{
-  background:rgba(255,255,255,0.13);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:22px;padding:44px 36px;
-  max-width:400px;width:90vw;text-align:center;
-  box-shadow:0 8px 40px rgba(0,0,0,0.4);
-  opacity:0;transform:translateY(30px);
-  transition:opacity .7s ease, transform .7s ease;
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
-.login-card.visible{opacity:1;transform:translateY(0);}
-.login-card img.logo{
-  width:80px;height:80px;border-radius:50%;
-  border:3px solid rgba(255,255,255,0.7);
-  object-fit:cover;margin-bottom:18px;
-}
-.login-card h2{font-size:20px;font-weight:700;margin-bottom:24px;text-shadow:0 2px 6px rgba(0,0,0,0.5);}
-.login-card input[type="text"]{
-  width:100%;padding:14px 16px;margin-bottom:16px;
-  border:none;border-radius:12px;
-  background:rgba(255,255,255,0.25);color:#fff;
-  font-size:17px;outline:none;
-  transition:background .3s,transform .3s;
-}
-.login-card input::placeholder{color:#ddd;}
-.login-card input:focus{background:rgba(255,255,255,0.4);transform:scale(1.03);}
-.login-card button.enter-btn{
-  width:100%;padding:14px;border:none;border-radius:12px;
-  background:#fff;color:#333;font-weight:700;font-size:18px;
-  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.2);
-  transition:background .3s,transform .2s,box-shadow .2s;
-}
-.login-card button.enter-btn:hover{background:#f0f0f0;transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.3);}
 
-/* زر تبديل الثيم */
+/* =========================
+   فيديو الخلفية
+========================= */
+#bg-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+  filter:brightness(.38);
+}
+
+body.light-theme #bg-video{
+  filter:brightness(.65);
+}
+
+/* =========================
+   زر الثيم
+========================= */
 #themeToggle{
-  position:fixed;top:14px;left:14px;z-index:9100;
-  background:rgba(255,255,255,0.25);border:none;
-  padding:10px 14px;border-radius:10px;
-  color:#fff;font-weight:700;font-size:18px;cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:background .3s;
+  position:fixed;
+  top:14px;
+  left:14px;
+  z-index:9100;
+  border:0;
+  border-radius:12px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.20);
+  color:#fff;
+  font-size:19px;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(0,0,0,.25);
+  transition:.25s;
 }
-#themeToggle:hover{background:rgba(255,255,255,0.45);}
 
-/* رسالة نجاح الدخول */
+#themeToggle:hover{
+  transform:scale(1.08);
+}
+
+/* =========================
+   تسجيل الدخول
+========================= */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(5,7,17,.35);
+}
+
+.login-card{
+  width:min(410px,92vw);
+  padding:42px 34px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:24px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 50px rgba(0,0,0,.45);
+  opacity:0;
+  transform:translateY(30px);
+  transition:.7s;
+}
+
+.login-card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.login-card img.logo{
+  width:84px;
+  height:84px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,.75);
+  margin-bottom:16px;
+}
+
+.login-card h2{
+  font-size:20px;
+  line-height:1.8;
+  margin-bottom:22px;
+}
+
+.login-card input{
+  width:100%;
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:12px;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  outline:none;
+  margin-bottom:14px;
+  transition:.25s;
+}
+
+.login-card input::placeholder{
+  color:#ddd;
+}
+
+.login-card input:focus{
+  background:rgba(255,255,255,.28);
+  transform:scale(1.02);
+}
+
+.btn{
+  border:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:11px 20px;
+  border-radius:12px;
+  background:var(--pink);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 5px 16px rgba(0,0,0,.25);
+  transition:.25s;
+}
+
+.btn:hover{
+  background:var(--pink-dark);
+  transform:translateY(-2px);
+}
+
+.enter-btn{
+  width:100%;
+  background:#fff;
+  color:#222;
+}
+
+.enter-btn:hover{
+  background:#eee;
+}
+
+/* =========================
+   رسالة الدخول
+========================= */
 #successMsg{
-  position:fixed;inset:0;display:none;z-index:9500;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.6);
-}
-#successMsg .msg-box{
-  background:rgba(255,255,255,0.95);color:#222;
-  padding:36px 50px;border-radius:18px;text-align:center;
-  box-shadow:0 8px 30px rgba(0,0,0,0.3);
-  font-size:22px;font-weight:700;
-}
-#successMsg .msg-box span{
-  display:block;margin-top:10px;font-size:16px;
-  font-weight:400;color:#555;
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:9500;
+  background:rgba(0,0,0,.72);
 }
 
-/* ===== الموقع الرئيسي ===== */
-#mainSite{display:none;}
-#mainSite.active{display:block;}
-body#body{color:#fff;background:linear-gradient(135deg,#1d2b64,#f8cdda);overflow-x:hidden;}
+#successMsg.active{
+  display:flex;
+}
 
+.msg-box{
+  width:min(450px,94vw);
+  padding:38px;
+  text-align:center;
+  border-radius:20px;
+  background:rgba(36,27,63,.97);
+  color:#fff;
+  box-shadow:0 15px 50px rgba(0,0,0,.5);
+  animation:pop .4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.msg-box span{
+  display:block;
+  margin-top:12px;
+  color:#ddd;
+  font-size:15px;
+}
+
+/* =========================
+   الموقع الرئيسي
+========================= */
+#mainSite{
+  display:none;
+}
+
+#mainSite.active{
+  display:block;
+}
+
+/* =========================
+   Header
+========================= */
 header{
-  position:fixed;top:0;left:0;right:0;
-  background:rgba(0,0,0,0.82);
-  display:flex;justify-content:space-between;align-items:center;
-  padding:15px 40px;z-index:1000;
-  box-shadow:0 4px 15px rgba(0,0,0,0.4);
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  z-index:1000;
+  padding:13px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  background:rgba(8,10,20,.88);
+  backdrop-filter:blur(14px);
+  box-shadow:0 5px 20px rgba(0,0,0,.35);
 }
-header h2{font-size:22px;}
-nav a{margin:0 14px;color:#fff;font-size:17px;position:relative;transition:.3s;}
-nav a::after{content:'';position:absolute;width:0;height:2px;background:#f8cdda;left:0;bottom:-5px;transition:.3s;}
-nav a:hover::after{width:100%;}
 
-#welcomeBanner{
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(10px);
-  border-radius:12px;padding:8px 20px;
-  font-size:16px;font-weight:700;color:#f8cdda;
+body.light-theme header{
+  background:rgba(255,255,255,.88);
+}
+
+header h2{
+  font-size:20px;
   white-space:nowrap;
 }
 
+nav{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+nav a{
+  padding:8px 10px;
+  border-radius:9px;
+  font-size:14px;
+  transition:.25s;
+}
+
+nav a:hover{
+  background:rgba(255,255,255,.12);
+  color:var(--pink-light);
+}
+
+#welcomeBanner{
+  padding:7px 13px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  color:var(--pink-light);
+  font-size:14px;
+  white-space:nowrap;
+}
+
+#menuBtn{
+  display:none;
+  border:0;
+  border-radius:10px;
+  padding:8px 12px;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  cursor:pointer;
+  font-size:20px;
+}
+
+/* =========================
+   الأقسام
+========================= */
 section{
-  min-height:100vh;padding:120px 20px 60px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  opacity:0;transform:translateY(40px);
+  min-height:100vh;
+  padding:120px 20px 70px;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  opacity:0;
+  transform:translateY(35px);
   transition:opacity .8s,transform .8s;
 }
-section.show{opacity:1;transform:translateY(0);}
-section h1{font-size:40px;margin-bottom:20px;}
-section > p{font-size:18px;max-width:700px;line-height:1.8;margin-bottom:25px;}
 
-.btn{
-  display:inline-block;padding:11px 24px;margin:12px;
-  background:#e0558f;color:#fff;font-size:16px;
-  border-radius:12px;transition:.3s;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3);
-  border:none;cursor:pointer;
+section.show{
+  opacity:1;
+  transform:translateY(0);
 }
-.btn:hover{background:#c73f76;transform:scale(1.05);}
 
-/* معرض الصور */
+section h1{
+  font-size:clamp(30px,5vw,42px);
+  margin-bottom:16px;
+}
+
+section>p{
+  max-width:760px;
+  line-height:1.9;
+  color:var(--muted);
+  margin-bottom:22px;
+}
+
+/* =========================
+   Hero
+========================= */
+.hero{
+  min-height:100vh;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before,
+.hero:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  filter:blur(55px);
+  pointer-events:none;
+}
+
+.hero:before{
+  width:450px;
+  height:450px;
+  background:rgba(224,85,143,.18);
+  right:-160px;
+  top:10%;
+}
+
+.hero:after{
+  width:350px;
+  height:350px;
+  background:rgba(80,130,255,.15);
+  left:-120px;
+  bottom:10%;
+}
+
+.hero>*{
+  position:relative;
+  z-index:1;
+}
+
+.hero-badge{
+  display:inline-block;
+  padding:8px 17px;
+  border-radius:999px;
+  background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.12);
+  margin-bottom:15px;
+}
+
+.hero h1{
+  font-size:clamp(34px,7vw,58px);
+  margin-bottom:15px;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:5px;
+}
+
+/* =========================
+   الإحصائيات
+========================= */
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin:28px 0;
+}
+
+.stat{
+  min-width:145px;
+  padding:17px 23px;
+  border-radius:16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  backdrop-filter:blur(10px);
+}
+
+.stat strong{
+  display:block;
+  font-size:29px;
+  color:var(--pink-light);
+}
+
+body.light-theme .stat strong{
+  color:var(--pink);
+}
+
+.stat span{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================
+   قصة اليوم
+========================= */
+.feature{
+  width:min(900px,95vw);
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:22px;
+  text-align:right;
+  border-radius:22px;
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.14),
+    rgba(255,255,255,.06)
+  );
+  border:1px solid var(--border);
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+  backdrop-filter:blur(12px);
+}
+
+.feature img{
+  width:240px;
+  height:185px;
+  object-fit:cover;
+  border-radius:17px;
+  flex-shrink:0;
+}
+
+.feature h2{
+  color:var(--pink-light);
+  margin-bottom:8px;
+}
+
+.feature p{
+  color:var(--muted);
+  line-height:1.8;
+  margin-bottom:12px;
+}
+
+/* =========================
+   المعرض
+========================= */
 .gallery{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;margin-top:18px;width:100%;max-width:1000px;
+  width:min(1050px,95vw);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
 }
-.gallery img{width:100%;border-radius:12px;transition:.4s;display:block;}
-.gallery img:hover{transform:scale(1.04);box-shadow:0 10px 20px rgba(0,0,0,0.5);}
 
-/* القصص */
-#stories{padding:80px 20px;background:rgba(0,0,0,0.25);}
-#stories > h1{font-size:38px;margin-bottom:38px;}
-.story-container{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;max-width:1200px;margin:0 auto;}
+.gallery img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:16px;
+  cursor:zoom-in;
+  transition:.35s;
+}
+
+.gallery img:hover{
+  transform:scale(1.025);
+  box-shadow:0 12px 30px rgba(0,0,0,.55);
+}
+
+/* =========================
+   البحث
+========================= */
+.search-box{
+  width:min(560px,95vw);
+  padding:14px 18px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--card);
+  color:var(--text);
+  outline:none;
+  margin-bottom:24px;
+}
+
+.search-box::placeholder{
+  color:var(--muted);
+}
+
+/* =========================
+   القصص
+========================= */
+.story-container{
+  width:min(1150px,96vw);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:17px;
+}
+
 .story-card{
-  display:flex;background:rgba(255,255,255,0.1);
-  border-radius:15px;overflow:hidden;width:340px;
-  transition:.3s;text-align:right;
+  position:relative;
+  display:flex;
+  width:350px;
+  min-height:170px;
+  text-align:right;
+  overflow:hidden;
+  border-radius:17px;
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:.3s;
+  backdrop-filter:blur(8px);
 }
-.story-card:hover{transform:scale(1.03);box-shadow:0 8px 20px rgba(0,0,0,0.5);}
-.story-card img{width:145px;height:145px;object-fit:cover;flex-shrink:0;}
-.story-content{padding:14px;display:flex;flex-direction:column;justify-content:space-between;}
-.story-content h3{font-size:20px;margin-bottom:7px;}
-.story-content p{font-size:14px;margin-bottom:8px;line-height:1.6;max-width:none;}
-.story-content .btn{font-size:14px;padding:7px 14px;margin:0;align-self:flex-start;}
 
-/* الخدمات */
-#services{padding:80px 20px;background:rgba(0,0,0,0.15);}
-.service-container{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;margin-top:28px;max-width:1000px;}
-.service-card{background:rgba(255,255,255,0.1);border-radius:15px;width:220px;padding:24px;transition:.3s;text-align:center;}
-.service-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.5);}
-.service-card .emoji{font-size:42px;margin-bottom:10px;display:block;}
+.story-card:hover{
+  transform:translateY(-5px);
+  background:var(--card-hover);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
 
-/* نافذة القصة */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px;}
-.overlay.active{display:flex;}
-.modal{background:#241b3f;border-radius:16px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:30px;text-align:right;position:relative;}
-.modal h2{margin-bottom:15px;color:#f8cdda;}
-.modal p{line-height:1.9;font-size:16px;margin-bottom:12px;}
-.modal .close{position:absolute;top:14px;left:14px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;}
+.story-card>img{
+  width:145px;
+  height:170px;
+  object-fit:cover;
+  flex-shrink:0;
+}
 
-footer{text-align:center;padding:24px;background:rgba(0,0,0,0.6);font-size:14px;}
+.story-content{
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:7px;
+}
 
-@media(max-width:600px){
-  header{padding:12px 16px;flex-wrap:wrap;gap:8px;}
-  nav a{margin:0 8px;font-size:14px;}
-  section h1{font-size:28px;}
+.story-content h3{
+  font-size:18px;
+}
+
+.story-content p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.story-content .btn{
+  padding:7px 12px;
+  font-size:13px;
+  margin-top:3px;
+}
+
+.favorite-btn{
+  position:absolute;
+  top:8px;
+  right:8px;
+  z-index:3;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  cursor:pointer;
+  font-size:20px;
+  transition:.25s;
+}
+
+.favorite-btn:hover{
+  transform:scale(1.1);
+}
+
+.favorite-btn.active{
+  background:var(--pink);
+}
+
+/* =========================
+   المفضلة
+========================= */
+#favoritesSection{
+  background:rgba(0,0,0,.08);
+}
+
+.favorite-empty{
+  margin-top:20px;
+  color:var(--muted);
+}
+
+/* =========================
+   نافذة القراءة
+========================= */
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:5000;
+  background:rgba(0,0,0,.78);
+}
+
+.overlay.active{
+  display:flex;
+}
+
+.modal{
+  position:relative;
+  width:min(700px,95vw);
+  max-height:85vh;
+  overflow:auto;
+  padding:30px;
+  border-radius:20px;
+  background:#241b3f;
+  color:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+
+body.light-theme .modal{
+  background:#fff;
+  color:#222;
+}
+
+.modal h2{
+  color:var(--pink-light);
+  margin-bottom:12px;
+}
+
+body.light-theme .modal h2{
+  color:var(--pink);
+}
+
+.modal p{
+  line-height:2;
+  color:#eee;
+  white-space:pre-wrap;
+  transition:.2s;
+}
+
+body.light-theme .modal p{
+  color:#333;
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  left:12px;
+  border:0;
+  background:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+body.light-theme .close{
+  color:#222;
+}
+
+.reader-tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:18px 0;
+}
+
+.reader-tools button{
+  border:0;
+  border-radius:9px;
+  padding:8px 12px;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  cursor:pointer;
+}
+
+body.light-theme .reader-tools button{
+  background:#eee;
+  color:#222;
+}
+
+/* =========================
+   الروابط والخدمات
+========================= */
+.service-container{
+  width:min(1000px,95vw);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+
+.service-card{
+  width:220px;
+  padding:25px;
+  text-align:center;
+  border-radius:17px;
+  background:var(--card);
+  border:1px solid var(--border);
+  transition:.3s;
+}
+
+.service-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.3);
+}
+
+.emoji{
+  display:block;
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.service-card h3{
+  margin-bottom:12px;
+}
+
+/* =========================
+   Lightbox
+========================= */
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:6000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.90);
+}
+
+.lightbox.active{
+  display:flex;
+}
+
+.lightbox img{
+  max-width:92vw;
+  max-height:82vh;
+  border-radius:17px;
+  box-shadow:0 20px 60px #000;
+}
+
+.lightbox-close{
+  position:absolute;
+  top:15px;
+  left:20px;
+  border:0;
+  background:none;
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* =========================
+   Toast
+========================= */
+#toast{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  z-index:99999;
+  padding:13px 18px;
+  border-radius:12px;
+  background:#171927;
+  color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.55);
+  transform:translateY(80px);
+  opacity:0;
+  pointer-events:none;
+  transition:.35s;
+}
+
+#toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* =========================
+   زر الأعلى
+========================= */
+.scroll-top{
+  position:fixed;
+  bottom:22px;
+  left:20px;
+  width:46px;
+  height:46px;
+  border:0;
+  border-radius:50%;
+  background:var(--pink);
+  color:#fff;
+  font-size:21px;
+  cursor:pointer;
+  display:none;
+  z-index:1500;
+}
+
+.scroll-top.show{
+  display:block;
+}
+
+/* =========================
+   لوحة الإدارة
+========================= */
+.admin-panel{
+  position:fixed;
+  inset:0;
+  z-index:7000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.82);
+}
+
+.admin-panel.active{
+  display:flex;
+}
+
+.admin-box{
+  position:relative;
+  width:min(680px,95vw);
+  max-height:90vh;
+  overflow:auto;
+  padding:25px;
+  border-radius:20px;
+  background:#241b3f;
+  color:#fff;
+  box-shadow:0 20px 60px #000;
+}
+
+.admin-box input,
+.admin-box textarea{
+  width:100%;
+  margin:7px 0 12px;
+  padding:12px;
+  border:0;
+  border-radius:10px;
+  outline:none;
+  color:#222;
+}
+
+.admin-box textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.admin-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px;
+  margin-top:8px;
+  border-radius:10px;
+  background:rgba(255,255,255,.08);
+}
+
+.admin-item span{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* =========================
+   Footer
+========================= */
+footer{
+  padding:28px 20px;
+  text-align:center;
+  background:rgba(0,0,0,.65);
+  color:#ddd;
+}
+
+footer .btn{
+  font-size:12px;
+  padding:6px 10px;
+  margin-right:8px;
+}
+
+/* =========================
+   الهاتف
+========================= */
+@media(max-width:800px){
+
+  header{
+    padding:11px 14px;
+  }
+
+  header h2{
+    font-size:16px;
+  }
+
+  #menuBtn{
+    display:block;
+  }
+
+  nav{
+    position:absolute;
+    top:61px;
+    right:12px;
+    left:12px;
+    display:none;
+    flex-direction:column;
+    align-items:stretch;
+    padding:10px;
+    border-radius:14px;
+    background:rgba(10,14,30,.97);
+    box-shadow:0 15px 35px rgba(0,0,0,.5);
+  }
+
+  nav.open{
+    display:flex;
+  }
+
+  nav a{
+    padding:11px;
+  }
+
+  #welcomeBanner{
+    display:none;
+  }
+
+  .feature{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .feature img{
+    width:100%;
+    height:210px;
+  }
+
+  .story-card{
+    width:min(430px,96vw);
+  }
+
+  .gallery{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gallery img{
+    height:150px;
+  }
+
+  section{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .stats{
+    width:100%;
+  }
+
+  .stat{
+    min-width:calc(50% - 8px);
+  }
+}
+
+@media(max-width:450px){
+
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .gallery img{
+    height:200px;
+  }
+
+  .story-card{
+    flex-direction:column;
+  }
+
+  .story-card>img{
+    width:100%;
+    height:190px;
+  }
+
+  .story-content{
+    padding:17px;
+  }
+
+  .favorite-btn{
+    top:10px;
+    right:10px;
+  }
+
+  .stat{
+    min-width:100%;
+  }
 }
 </style>
 </head>
 
 <body id="body">
 
-<!-- ===== شاشة التحميل ===== -->
+<!-- =========================
+     شاشة التحميل
+========================= -->
 <div id="loader">
   <div class="spinner"></div>
-  جاري التحميل...
+  <div>جاري تجهيز الموقع...</div>
 </div>
 
-<!-- ===== فيديو الخلفية ===== -->
+<!-- =========================
+     فيديو الخلفية
+========================= -->
 <video id="bg-video" autoplay muted loop playsinline>
-  <source src="https://cdn.pixabay.com/vimeo/293918747/Abstract%20Particles%20Loop.mp4?width=1280&hash=c226d858ea3a8c954b547e91665ec8d5ca85d74f" type="video/mp4"/>
+  <source
+    src="https://cdn.pixabay.com/vimeo/293918747/Abstract%20Particles%20Loop.mp4?width=1280&hash=c226d858ea3a8c954b547e91665ec8d5ca85d74f"
+    type="video/mp4">
 </video>
 
-<!-- ===== زر الثيم ===== -->
-<button id="themeToggle">🌙</button>
+<!-- =========================
+     زر الثيم
+========================= -->
+<button id="themeToggle" aria-label="تغيير المظهر">🌙</button>
 
-<!-- ===== شاشة تسجيل الدخول ===== -->
+<!-- =========================
+     شاشة تسجيل الدخول
+========================= -->
 <div id="loginScreen">
+
   <div class="login-card" id="loginCard">
-    <img class="logo" src="https://i.postimg.cc/Dyy0RRCs/555555.png" alt="شعار الموقع"
-         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Ccircle cx=%2240%22 cy=%2240%22 r=%2240%22 fill=%22%23e0558f%22/%3E%3Ctext x=%2240%22 y=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2232%22%3E📖%3C/text%3E%3C/svg%3E'"/>
-    <h2>مرحباً بك في موقع زيد النصيرات<br/>أدخل اسمك للمتابعة</h2>
-    <input type="text" id="usernameInput" placeholder="اكتب اسمك هنا..." autocomplete="off"/>
-    <button class="enter-btn" id="enterBtn">دخول ✨</button>
+
+    <img
+      class="logo"
+      src="https://i.postimg.cc/Dyy0RRCs/555555.png"
+      alt="شعار الموقع"
+      onerror="this.style.display='none'">
+
+    <h2>
+      مرحباً بك في موقع زيد النصيرات
+      <br>
+      أدخل اسمك للمتابعة
+    </h2>
+
+    <input
+      id="usernameInput"
+      type="text"
+      maxlength="40"
+      placeholder="اكتب اسمك هنا..."
+      autocomplete="off">
+
+    <button class="btn enter-btn" id="enterBtn">
+      دخول ✨
+    </button>
+
   </div>
+
 </div>
 
-<!-- ===== رسالة النجاح ===== -->
+<!-- =========================
+     رسالة الترحيب
+========================= -->
 <div id="successMsg">
+
   <div class="msg-box">
-    🎉 أهلاً وسهلاً يا <span id="welcomeName" style="color:#e0558f;display:inline;"></span>!
-    <span>سيتم تحويلك خلال <strong id="countdown">3</strong> ثواني...</span>
+
+    🎉 أهلاً وسهلاً يا
+    <strong id="welcomeName" style="color:#e0558f"></strong>
+
+    <span>
+      شكراً لدعمك للموقع ❤️
+      <br>
+      سيتم الدخول خلال
+      <strong id="countdown">3</strong>
+      ثواني...
+    </span>
+
   </div>
+
 </div>
 
-<!-- ===== الموقع الرئيسي ===== -->
+<!-- =========================
+     الموقع الرئيسي
+========================= -->
 <div id="mainSite">
 
+  <!-- Header -->
   <header>
-    <h2>📖 قصص زيد النصيرات</h2>
-    <nav>
+
+    <h2>📖 زيد النصيرات</h2>
+
+    <button id="menuBtn" aria-label="فتح القائمة">
+      ☰
+    </button>
+
+    <nav id="nav">
+
       <a href="#home">الرئيسية</a>
-      <a href="#gallery">معرض الصور</a>
-      <a href="#stories">القصص</a>
-      <a href="#services">خدماتنا</a>
+      <a href="#storyOfDay">🔥 قصة اليوم</a>
+      <a href="#gallery">🖼️ المعرض</a>
+      <a href="#stories">📚 القصص</a>
+      <a href="#favoritesSection">❤️ المفضلة</a>
+      <a href="#links">🔗 الروابط</a>
+      <a href="#services">🛠️ الخدمات</a>
+
     </nav>
+
     <div id="welcomeBanner"></div>
+
   </header>
 
-  <section id="home">
-    <h1>مرحباً في عالم القصص 🌟</h1>
-    <p id="homeDesc">مجموعة قصص قصيرة من إبداع وكتابة زيد النصيرات، بأسلوب شيّق وصور معبّرة. اختر قصة وابدأ رحلتك في القراءة.</p>
-  </section>
+  <!-- =========================
+       الرئيسية
+  ========================= -->
+  <section id="home" class="hero">
 
-  <section id="gallery">
-    <h1>معرض الصور</h1>
-    <div class="gallery" id="galleryContainer"></div>
-  </section>
-
-  <section id="stories">
-    <h1>قصص ممتعة 🌟</h1>
-    <div class="story-container" id="storyContainer"></div>
-  </section>
-
-  <section id="services">
-    <h1>خدماتنا</h1>
-    <p>نقدّم خدمات كتابة وتصميم متنوعة تشمل كتابة القصص، تصميم المواقع، وإعداد المحتوى الإبداعي.</p>
-    <div class="service-container">
-      <div class="service-card"><span class="emoji">✍️</span><h3>كتابة القصص</h3></div>
-      <div class="service-card"><span class="emoji">💻</span><h3>تطوير المواقع</h3></div>
-      <div class="service-card"><span class="emoji">🎨</span><h3>تصميم الجرافيك</h3></div>
-      <div class="service-card"><span class="emoji">💡</span><h3>أفكار إبداعية</h3></div>
+    <div class="hero-badge">
+      ✨ مرحباً بك في عالم زيد النصيرات
     </div>
+
+    <h1>
+      قصص، خيال، وإبداع 🌟
+    </h1>
+
+    <p id="homeDesc">
+      مجموعة قصص قصيرة ممتعة بأسلوب شيّق وصور معبّرة.
+      اختر قصة وابدأ رحلتك.
+    </p>
+
+    <div class="hero-actions">
+
+      <a class="btn" href="#stories">
+        📖 ابدأ القراءة
+      </a>
+
+      <a class="btn" href="#gallery">
+        🖼️ شاهد المعرض
+      </a>
+
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong id="storyCount">0</strong>
+        <span>قصة</span>
+      </div>
+
+      <div class="stat">
+        <strong id="photoCount">0</strong>
+        <span>صورة</span>
+      </div>
+
+      <div class="stat">
+        <strong id="readCount">0</strong>
+        <span>قصة مقروءة</span>
+      </div>
+
+      <div class="stat">
+        <strong id="favCount">0</strong>
+        <span>مفضلة</span>
+      </div>
+
+    </div>
+
   </section>
 
-  <footer>© 2026 زيد النصيرات — جميع الحقوق محفوظة</footer>
+  <!-- =========================
+       قصة اليوم
+  ========================= -->
+  <section id="storyOfDay">
+
+    <h1>🔥 قصة اليوم</h1>
+
+    <p>
+      قصة يتم اختيارها تلقائياً حسب اليوم.
+    </p>
+
+    <div id="dailyStory"></div>
+
+  </section>
+
+  <!-- =========================
+       المعرض
+  ========================= -->
+  <section id="gallery">
+
+    <h1>🖼️ معرض الصور</h1>
+
+    <p>
+      اضغط على أي صورة لتكبيرها.
+    </p>
+
+    <div
+      class="gallery"
+      id="galleryContainer">
+    </div>
+
+  </section>
+
+  <!-- =========================
+       القصص
+  ========================= -->
+  <section id="stories">
+
+    <h1>📚 القصص الممتعة</h1>
+
+    <input
+      id="storySearch"
+      class="search-box"
+      type="search"
+      placeholder="🔍 ابحث بالعنوان أو الوصف أو محتوى القصة...">
+
+    <div
+      class="story-container"
+      id="storyContainer">
+    </div>
+
+    <p
+      id="noResults"
+      style="display:none">
+      لا توجد قصة مطابقة لبحثك.
+    </p>
+
+  </section>
+
+  <!-- =========================
+       المفضلة
+  ========================= -->
+  <section id="favoritesSection">
+
+    <h1>❤️ قصصي المفضلة</h1>
+
+    <p>
+      القصص التي حفظتها ستبقى محفوظة على هذا المتصفح.
+    </p>
+
+    <div
+      class="story-container"
+      id="favoriteContainer">
+    </div>
+
+    <p
+      id="favoriteEmpty"
+      class="favorite-empty">
+      لم تحفظ أي قصة في المفضلة بعد.
+    </p>
+
+  </section>
+
+  <!-- =========================
+       الروابط
+  ========================= -->
+  <section id="links">
+
+    <h1>🔗 روابطنا</h1>
+
+    <p>
+      تقدر تزور روابطنا المهمة من هنا.
+    </p>
+
+    <div class="service-container">
+
+      <div class="service-card">
+        <span class="emoji">▶️</span>
+        <h3>يوتيوب</h3>
+        <a
+          class="btn"
+          href="https://www.youtube.com/"
+          target="_blank"
+          rel="noopener noreferrer">
+          زيارة
+        </a>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">📸</span>
+        <h3>إنستغرام</h3>
+        <a
+          class="btn"
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer">
+          زيارة
+        </a>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">💻</span>
+        <h3>GitHub</h3>
+        <a
+          class="btn"
+          href="https://github.com/"
+          target="_blank"
+          rel="noopener noreferrer">
+          زيارة
+        </a>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">📘</span>
+        <h3>فيسبوك</h3>
+        <a
+          class="btn"
+          href="https://www.facebook.com/"
+          target="_blank"
+          rel="noopener noreferrer">
+          زيارة
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================
+       الخدمات
+  ========================= -->
+  <section id="services">
+
+    <h1>🛠️ خدماتنا</h1>
+
+    <p>
+      نقدّم خدمات كتابة القصص وتطوير المواقع
+      والتصميم والأفكار الإبداعية.
+    </p>
+
+    <div class="service-container">
+
+      <div class="service-card">
+        <span class="emoji">✍️</span>
+        <h3>كتابة القصص</h3>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">💻</span>
+        <h3>تطوير المواقع</h3>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">🎨</span>
+        <h3>تصميم الجرافيك</h3>
+      </div>
+
+      <div class="service-card">
+        <span class="emoji">💡</span>
+        <h3>أفكار إبداعية</h3>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================
+       Footer
+  ========================= -->
+  <footer>
+
+    © 2026 زيد النصيرات — جميع الحقوق محفوظة
+
+    <button
+      class="btn"
+      id="adminOpen">
+      ⚙️ إدارة الموقع
+    </button>
+
+  </footer>
+
 </div>
 
-<!-- نافذة القصة -->
-<div class="overlay" id="overlay">
+<!-- =========================
+     نافذة القراءة
+========================= -->
+<div
+  class="overlay"
+  id="overlay">
+
   <div class="modal">
-    <button class="close" id="closeModal">✕</button>
+
+    <button
+      class="close"
+      id="closeModal">
+      ✕
+    </button>
+
     <h2 id="modalTitle"></h2>
+
+    <div class="reader-tools">
+
+      <button id="fontDown">
+        A−
+      </button>
+
+      <button id="fontUp">
+        A+
+      </button>
+
+      <button id="copyStory">
+        📋 نسخ
+      </button>
+
+      <button id="shareStory">
+        📤 مشاركة
+      </button>
+
+    </div>
+
     <p id="modalBody"></p>
+
   </div>
+
 </div>
 
-<audio id="welcomeSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+<!-- =========================
+     Lightbox
+========================= -->
+<div
+  class="lightbox"
+  id="lightbox">
+
+  <button
+    class="lightbox-close"
+    id="lightboxClose">
+    ✕
+  </button>
+
+  <img
+    id="lightboxImg"
+    alt="صورة مكبرة">
+
+</div>
+
+<!-- زر الأعلى -->
+<button
+  class="scroll-top"
+  id="scrollTop">
+  ↑
+</button>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- =========================
+     لوحة الإدارة
+========================= -->
+<div
+  class="admin-panel"
+  id="adminPanel">
+
+  <div class="admin-box">
+
+    <button
+      class="close"
+      id="adminClose">
+      ✕
+    </button>
+
+    <h2>
+      ⚙️ إدارة القصص
+    </h2>
+
+    <p style="margin:10px 0;color:#ddd">
+      هذه لوحة إدارة محلية؛ البيانات تحفظ في متصفحك فقط.
+    </p>
+
+    <input
+      id="adminTitle"
+      placeholder="عنوان القصة">
+
+    <input
+      id="adminShort"
+      placeholder="وصف قصير">
+
+    <textarea
+      id="adminFull"
+      placeholder="نص القصة"></textarea>
+
+    <button
+      class="btn"
+      id="adminAdd">
+      ➕ إضافة القصة
+    </button>
+
+    <div id="adminList"></div>
+
+  </div>
+
+</div>
 
 <script>
-/* ===== بيانات القصص ===== */
-const stories = [
-  {img:"adventure",  seed:10, title:"قصة المغامرة",   short:"انطلق في رحلة مثيرة مليئة بالإثارة والتشويق.", full:"في قرية صغيرة على أطراف الجبل، قرر الشاب سامر أن يخوض رحلة لم يجرؤ أحد من أبناء قريته على خوضها من قبل. حمل حقيبته الصغيرة وبدأ يتسلق الممرات الوعرة، وفي كل منعطف كانت تنتظره مفاجأة جديدة: نهر يتحدى العبور، وكهف يخفي أسراراً قديمة. بعد ثلاثة أيام من المشي المتواصل، وصل إلى قمة الجبل ليجد منظراً لم يره أحد من قبل، وفهم حينها أن أجمل الرحلات هي تلك التي تتطلب شجاعة للبدء بها."},
-  {img:"fantasy",    seed:11, title:"قصة الخيال",     short:"استكشف عوالم خيالية مليئة بالعجائب والمغامرات.", full:"كانت ليلى تحب الرسم أكثر من أي شيء آخر، وفي إحدى الليالي وبينما كانت ترسم غابة من الألوان، شعرت أن يدها ترسم بمفردها. فجأة انفتح الرسم أمامها كباب صغير، فدخلت لتجد نفسها في عالم من الأشجار المتكلمة والأنهار الملونة. تعلمت هناك أن كل لوحة ترسمها بصدق تحمل جزءاً حقيقياً من روحها، وعادت إلى غرفتها وهي تحمل قصة ستُروى للأجيال القادمة."},
-  {img:"hero",       seed:12, title:"قصة الأبطال",    short:"تعرّف على أبطالنا وكيف يواجهون التحديات بشجاعة.", full:"لم يكن عمر بطلاً خارقاً، لكنه كان أول من يهرع لمساعدة جيرانه عند الحاجة. حين اجتاح الفيضان الحي، كان عمر يحمل كبار السن على كتفيه ويقود الأطفال إلى بر الأمان متجاهلاً تعبه وخوفه. لم يطلب شكراً ولا تقديراً، وحين سُئل لاحقاً عن سر شجاعته أجاب ببساطة: البطولة ليست غياب الخوف، بل التصرف رغم وجوده."},
-  {img:"discovery",  seed:13, title:"قصة الاكتشاف",   short:"رحلة لاكتشاف أسرار جديدة وعوالم مجهولة.", full:"وجد الباحث الشاب خالد خريطة قديمة مطوية داخل كتاب في مكتبة والده. لم تكن خريطة كنز كما توقع، بل كانت خريطة لأماكن الفرح في بلدته: شجرة كبيرة كان يلعب تحتها الأطفال، عين ماء كانت تجتمع عندها العائلات، وساحة قديمة شهدت أعراس القرية. أدرك خالد حينها أن أعظم الاكتشافات ليست دائماً بعيدة، بل قد تكون مخبأة في ذاكرة مكان نعرفه جيداً."},
-  {img:"hope",       seed:14, title:"قصة الأمل",      short:"قصص تلهمك لتحقيق أحلامك ومواجهة الصعاب.", full:"بعد أن فقدت هند بصرها في حادث، ظنت أن كل أحلامها انتهت. لكنها وبمساعدة معلمة صبورة تعلمت القراءة بطريقة برايل، وأعادت اكتشاف حبها للموسيقى عبر أذنيها بدل عينيها. بعد سنوات أصبحت هند عازفة بيانو معروفة، تقول دائماً لجمهورها: العتمة لم تُطفئ حلمي، بل علّمتني أن أراه بطريقة مختلفة."},
-  {img:"friends",    seed:15, title:"قصة المغامرين",  short:"انضم إلى فريق المغامرين واختبر مهاراتك.", full:"اجتمع خمسة أصدقاء من مدرسة واحدة ليخوضوا رحلة تخييم في الصحراء. لم يكن أحدهم يتوقع أن تنقلب الرحلة إلى اختبار حقيقي للتعاون: عاصفة رملية مفاجئة، وخيمة تحتاج لإعادة بناء، ونجمة الشمال التي أرشدتهم للطريق. عادوا إلى المدينة بصداقة أقوى وقصة سيرويها كل واحد منهم لأولاده يوماً ما."},
-  {img:"creativity", seed:16, title:"قصة الإبداع",    short:"تعلم كيف يحول الأشخاص أفكارهم إلى إنجازات رائعة.", full:"كانت فكرة رامي بسيطة: صندوق خشبي صغير لتبادل الكتب بين الجيران. سخر منه البعض في البداية، لكنه وضع الصندوق أمام بيته على أي حال. بعد شهر امتلأ الصندوق بعشرات الكتب، وبدأ جيران آخرون بوضع صناديق مشابهة في شوارعهم. فكرة بسيطة تحولت إلى مكتبة متنقلة تخدم الحي بأكمله."},
-  {img:"strength",   seed:17, title:"قصة القوة",      short:"اكتشف قوة الإرادة والتصميم في مواجهة التحديات.", full:"بعد إصابة قوية في ركبته أنهت مسيرته الرياضية المتوقعة، رفض الرياضي الشاب مراد الاستسلام. أمضى عامين كاملين في العلاج الطبيعي والتمارين اليومية، وواجه أياماً شعر فيها أن كل شيء عبثي. لكنه عاد في النهاية إلى الملاعب، ليس كما كان بل أقوى، حاملاً درساً تعلمه في طريق التعافي: القوة الحقيقية لا تُقاس بالسقوط، بل بعدد المرات التي ننهض فيها بعده."},
-  {img:"friendship", seed:18, title:"قصة الصداقة",    short:"تعرّف على قصص أصدقاء واجهوا معًا مغامرات الحياة.", full:"تعرفت سارة ونور في أول يوم دراسي، حين شاركتا نفس الطاولة صدفة. مرت السنوات وتفرقت بهما الدراسة والعمل بين مدن مختلفة، لكنهما حافظتا على اتصال أسبوعي لم ينقطع أبداً. في أصعب أيام حياتهما كانت كل واحدة منهما أول من تطمئن على الأخرى. تعلّمتا معاً أن الصداقة الحقيقية لا تُقاس بالمسافة، بل بمدى حضورك حين يحتاجونك."}
+/* =====================================================
+   V4 JavaScript
+===================================================== */
+
+/* =========================
+   البيانات الأساسية
+========================= */
+
+const baseStories = [
+
+  {
+    img:"adventure",
+    seed:10,
+    title:"قصة المغامرة",
+    short:"رحلة مثيرة مليئة بالإثارة والتشويق.",
+    full:"في قرية صغيرة على أطراف الجبل، قرر سامر خوض رحلة لم يجرؤ أحد من أبناء قريته على خوضها. وبعد أيام وصل إلى القمة واكتشف أن أجمل الرحلات هي التي تتطلب شجاعة للبدء بها."
+  },
+
+  {
+    img:"fantasy",
+    seed:11,
+    title:"قصة الخيال",
+    short:"عوالم خيالية مليئة بالعجائب والمغامرات.",
+    full:"كانت ليلى تحب الرسم، وفي إحدى الليالي شعرت أن لوحتها تقودها إلى عالم من الأشجار المتكلمة والأنهار الملونة. عادت وهي تحمل قصة جديدة عن قوة الخيال."
+  },
+
+  {
+    img:"hero",
+    seed:12,
+    title:"قصة الأبطال",
+    short:"أبطال يواجهون التحديات بشجاعة.",
+    full:"لم يكن عمر بطلاً خارقاً، لكنه كان دائماً أول من يساعد جيرانه. تعلم أن البطولة ليست غياب الخوف، بل التصرف رغم وجوده."
+  },
+
+  {
+    img:"discovery",
+    seed:13,
+    title:"قصة الاكتشاف",
+    short:"رحلة لاكتشاف أسرار جديدة.",
+    full:"وجد خالد خريطة قديمة داخل كتاب. اكتشف أنها تقود إلى أماكن تحمل ذكريات جميلة في بلدته، وفهم أن أعظم الاكتشافات قد تكون قريبة منا."
+  },
+
+  {
+    img:"hope",
+    seed:14,
+    title:"قصة الأمل",
+    short:"قصة تلهمك لمواجهة الصعاب.",
+    full:"واجهت هند تحدياً كبيراً، لكنها تعلمت مهارة جديدة وواصلت حلمها بالموسيقى حتى أصبحت عازفة ناجحة."
+  },
+
+  {
+    img:"friends",
+    seed:15,
+    title:"قصة المغامرين",
+    short:"فريق من الأصدقاء يتعلم التعاون.",
+    full:"اجتمع خمسة أصدقاء في رحلة تخييم، وتعلموا أن التعاون والصبر يساعدان الفريق على تجاوز المفاجآت."
+  },
+
+  {
+    img:"creativity",
+    seed:16,
+    title:"قصة الإبداع",
+    short:"فكرة بسيطة تتحول إلى إنجاز رائع.",
+    full:"بدأ رامي بصندوق صغير لتبادل الكتب بين الجيران، ثم تحولت الفكرة إلى مبادرة قراءة في الحي."
+  },
+
+  {
+    img:"strength",
+    seed:17,
+    title:"قصة القوة",
+    short:"قوة الإرادة والتصميم.",
+    full:"واجه مراد تحدياً رياضياً، وعمل بصبر على تطوير نفسه حتى عاد إلى ممارسة الرياضة بثقة أكبر."
+  },
+
+  {
+    img:"friendship",
+    seed:18,
+    title:"قصة الصداقة",
+    short:"أصدقاء يواجهون مغامرات الحياة معاً.",
+    full:"تعرفت سارة ونور في المدرسة، وحافظتا على صداقتهما عبر السنوات بفضل التواصل والاهتمام."
+  },
+
+  {
+    img:"city",
+    seed:19,
+    title:"رحلة إلى المدينة القديمة",
+    short:"اكتشف أسرار مدينة عريقة.",
+    full:"في صباح مشمس، وجد يزن دفتراً قديماً في مكتبة الحي. قاده الدفتر إلى أزقة المدينة القديمة، حيث اكتشف سوقاً صغيراً لا يظهر على الخرائط. ساعد أصحاب المتاجر في ترتيب المكان، وعرف أن أعظم الأسرار ليست كنوزاً مخبأة، بل قصص الناس وذكرياتهم."
+  },
+
+  {
+    img:"forest",
+    seed:20,
+    title:"مفتاح الغابة",
+    short:"مفتاح غريب يقود صديقين إلى مكان غير متوقع.",
+    full:"وجدت ريم وسليم مفتاحاً معدنياً تحت شجرة كبيرة. بحثا عن بابه أياماً، حتى وصلا إلى كوخ مهجور في طرف الغابة. لم يكن وراء الباب ذهب أو جواهر، بل صندوق مليء برسائل قديمة من سكان القرية."
+  },
+
+  {
+    img:"stars",
+    seed:21,
+    title:"النجمة الصغيرة",
+    short:"المثابرة تحول فكرة بسيطة إلى إنجاز.",
+    full:"كان فادي يحب مراقبة النجوم، وحلم بصنع منظار بسيط. بدأ بمواد متوفرة في المنزل، وفشل أكثر من مرة، لكنه واصل التعلم. بعد أسابيع نجح في صنع منظار ساعده على رؤية القمر بوضوح."
+  },
+
+  {
+    img:"library",
+    seed:22,
+    title:"سر المكتبة",
+    short:"كتاب غامض يفتح باباً إلى عالم المعرفة.",
+    full:"في آخر رف في مكتبة المدرسة وجدت نور كتاباً بلا عنوان. كلما قرأت صفحة ظهرت لها فكرة جديدة لمشروع أو تجربة. أدركت أن الكتاب كان مليئاً بأسئلة تشجع القارئ على التفكير، فقررت إنشاء نادي قراءة."
+  },
+
+  {
+    img:"mountain",
+    seed:23,
+    title:"الطريق إلى القمة",
+    short:"التقدم خطوة خطوة يجعل الهدف أسهل.",
+    full:"قرر مازن تسلق تلة قريبة مع أصدقائه. في البداية شعر أن الطريق طويل، لكنه قسم الرحلة إلى مراحل صغيرة. عند الوصول إلى القمة تعلم أن تقسيم الهدف يجعل الوصول إليه أسهل."
+  },
+
+  {
+    img:"family",
+    seed:24,
+    title:"صندوق الذكريات",
+    short:"ذكريات عائلية محفوظة في صندوق قديم.",
+    full:"عثرت دانا على صندوق خشبي في غرفة جدتها. كان يحتوي على صور ورسائل وتذاكر رحلات قديمة. بدأت تسأل أفراد العائلة عن كل قطعة، فكتبت قصة تجمع ذكرياتهم."
+  },
+
+  {
+    img:"invention",
+    seed:25,
+    title:"المخترع الصغير",
+    short:"فكرة مدرسية تتحول إلى مشروع مفيد.",
+    full:"لاحظ كريم أن زملاءه ينسون أدواتهم كثيراً. صمم لوحة صغيرة لتنظيم الأدوات داخل الصف، ثم طورها مع فريقه. تعلم كريم أن الحلول الكبيرة قد تبدأ من مشكلة صغيرة."
+  },
+
+  {
+    img:"future",
+    seed:26,
+    title:"رسالة من المستقبل",
+    short:"رسالة خيالية تحمل نصيحة عن قيمة الوقت.",
+    full:"كتب سامي رسالة إلى نفسه بعد عشر سنوات، يصف فيها أحلامه وما يريد أن يتعلمه. وضعها في صندوق خاص، ثم بدأ يعمل على أهداف صغيرة كل أسبوع."
+  },
+
+  {
+    img:"island",
+    seed:27,
+    title:"جزيرة الألوان",
+    short:"أصدقاء يتعاونون لإعادة الحياة إلى مكان جميل.",
+    full:"وصل أربعة أصدقاء إلى جزيرة هادئة. لاحظوا أن الشاطئ يحتاج إلى تنظيف، فجمعوا النفايات ورتبوا المكان وزرعوا بعض النباتات. عندما عادوا لاحقاً وجدوا أن الجزيرة أصبحت أجمل."
+  },
+
+  {
+    img:"school",
+    seed:28,
+    title:"المسابقة الكبيرة",
+    short:"النجاح الحقيقي يأتي أيضاً من التعلم.",
+    full:"شارك فريق المدرسة في مسابقة علمية بمشروع بسيط. لم يحصلوا على المركز الأول، لكنهم تلقوا ملاحظات ساعدتهم على تطوير فكرتهم. في المسابقة التالية عادوا بمشروع أفضل وفازوا بجائزة الابتكار."
+  },
+
+  {
+    img:"honesty",
+    seed:29,
+    title:"الحارس الأمين",
+    short:"قصة عن الأمانة وتحمل المسؤولية.",
+    full:"وجد ليث محفظة في ساحة المدرسة. بدلاً من الاحتفاظ بها، سلمها للإدارة وساعد في البحث عن صاحبها. بعد ساعات وصلت المحفظة إلى طالب كان يحتاج إلى أوراق مهمة بداخلها."
+  },
+
+  {
+    img:"rain",
+    seed:30,
+    title:"مدينة تحت المطر",
+    short:"الجمال قد يكون في التفاصيل الصغيرة.",
+    full:"بدأ المطر يهطل بينما كانت جود عائدة إلى منزلها. بدلاً من الإسراع، قررت أن تراقب المدينة من حولها. رأت انعكاس الأضواء على الشوارع، ووصلت إلى المنزل وهي تشعر أن يوماً عادياً يمكن أن يحمل لحظات جميلة."
+  },
+
+  {
+    img:"tree",
+    seed:31,
+    title:"الشجرة العجوز",
+    short:"شجرة تصبح سبباً في اجتماع الجيران.",
+    full:"كانت هناك شجرة كبيرة في وسط الحي. قرر السكان الاعتناء بها بعد أن لاحظوا أنها تحتاج إلى رعاية. اجتمعوا لتنظيف المكان وزراعة نباتات حولها، وتحولت المنطقة إلى حديقة صغيرة."
+  },
+
+  {
+    img:"train",
+    seed:32,
+    title:"رحلة القطار",
+    short:"رحلة تغير طريقة النظر إلى العالم.",
+    full:"ركب آدم القطار لأول مرة في رحلة مع عائلته. شاهد مدناً وحقولاً وقرى من النافذة، وتحدث مع مسافرين من أماكن مختلفة. عند العودة بدأ يرسم الأماكن التي شاهدها."
+  }
+
 ];
 
-/* ===== صورة SVG بديلة ===== */
-function placeholderImg(seed, w, h) {
-  const hue = (seed * 47) % 360, hue2 = (hue + 60) % 360;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs><linearGradient id="g${seed}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="hsl(${hue},70%,55%)"/><stop offset="100%" stop-color="hsl(${hue2},70%,40%)"/></linearGradient></defs><rect width="${w}" height="${h}" fill="url(#g${seed})"/><circle cx="${w*.75}" cy="${h*.25}" r="${Math.min(w,h)*.15}" fill="rgba(255,255,255,.25)"/><circle cx="${w*.2}" cy="${h*.8}" r="${Math.min(w,h)*.22}" fill="rgba(255,255,255,.15)"/></svg>`;
-  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+/* =========================
+   الأدوات
+========================= */
+
+const $ = id => document.getElementById(id);
+
+const galleryTopics = [
+  "nature",
+  "travel",
+  "city",
+  "mountain",
+  "ocean",
+  "forest"
+];
+
+function placeholderImg(seed,w=400,h=300){
+
+  const hue = (seed * 47) % 360;
+  const hue2 = (hue + 65) % 360;
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="${w}"
+       height="${h}">
+
+    <defs>
+      <linearGradient
+        id="g"
+        x1="0"
+        y1="0"
+        x2="1"
+        y2="1">
+
+        <stop
+          offset="0%"
+          stop-color="hsl(${hue},70%,55%)"/>
+
+        <stop
+          offset="100%"
+          stop-color="hsl(${hue2},70%,40%)"/>
+
+      </linearGradient>
+    </defs>
+
+    <rect
+      width="100%"
+      height="100%"
+      fill="url(#g)"/>
+
+    <circle
+      cx="${w*.75}"
+      cy="${h*.25}"
+      r="${Math.min(w,h)*.15}"
+      fill="#ffffff33"/>
+
+    <circle
+      cx="${w*.2}"
+      cy="${h*.8}"
+      r="${Math.min(w,h)*.22}"
+      fill="#ffffff22"/>
+
+  </svg>`;
+
+  return "data:image/svg+xml;charset=utf-8,"
+    + encodeURIComponent(svg);
 }
-function themedImg(topic, w, h, seed) {
-  return `https://loremflickr.com/${w}/${h}/${topic}`;
+
+function themedImg(topic,w,h,seed){
+
+  return `https://loremflickr.com/${w}/${h}/${topic}?lock=${seed}`;
+
 }
 
-/* ===== شاشة التحميل ===== */
-const loader = document.getElementById("loader");
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    setTimeout(() => {
-      loader.style.display = "none";
-      document.getElementById("loginCard").classList.add("visible");
-    }, 600);
-  }, 1300);
-});
+/* =========================
+   القصص الإضافية
+========================= */
 
-/* ===== تبديل الثيم ===== */
-const themeBtn = document.getElementById("themeToggle");
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("light-theme");
-  themeBtn.textContent = document.body.classList.contains("light-theme") ? "🌙" : "☀️";
-});
+function getExtraStories(){
 
-/* ===== تسجيل الدخول ===== */
-document.getElementById("enterBtn").addEventListener("click", doLogin);
-document.getElementById("usernameInput").addEventListener("keydown", e => { if(e.key === "Enter") doLogin(); });
+  try{
 
-function doLogin() {
-  const name = document.getElementById("usernameInput").value.trim();
-  if (!name) {
-    document.getElementById("usernameInput").style.border = "2px solid #e0558f";
-    document.getElementById("usernameInput").placeholder = "⚠️ اكتب اسمك أولاً";
+    return JSON.parse(
+      localStorage.getItem("zaid-extra-stories") || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+function saveExtraStories(stories){
+
+  localStorage.setItem(
+    "zaid-extra-stories",
+    JSON.stringify(stories)
+  );
+
+}
+
+function allStories(){
+
+  return [
+    ...baseStories,
+    ...getExtraStories()
+  ];
+
+}
+
+/* =========================
+   المفضلة
+========================= */
+
+function getFavorites(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("zaid-favorites") || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+function saveFavorites(list){
+
+  localStorage.setItem(
+    "zaid-favorites",
+    JSON.stringify(list)
+  );
+
+}
+
+function isFavorite(index){
+
+  return getFavorites().includes(index);
+
+}
+
+function toggleFavorite(index){
+
+  let favorites = getFavorites();
+
+  const position = favorites.indexOf(index);
+
+  if(position !== -1){
+
+    favorites.splice(position,1);
+
+    toast("تمت إزالة القصة من المفضلة");
+
+  }else{
+
+    favorites.push(index);
+
+    toast("❤️ تمت إضافة القصة للمفضلة");
+
+  }
+
+  saveFavorites(favorites);
+
+  renderStories(
+    $("storySearch").value
+  );
+
+  renderFavorites();
+
+  updateStats();
+
+}
+
+/* =========================
+   القصص المقروءة
+========================= */
+
+function getReadStories(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("zaid-reads") || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+function markAsRead(index){
+
+  const reads = getReadStories();
+
+  if(!reads.includes(index)){
+
+    reads.push(index);
+
+    localStorage.setItem(
+      "zaid-reads",
+      JSON.stringify(reads)
+    );
+
+  }
+
+  updateStats();
+
+}
+
+/* =========================
+   Toast
+========================= */
+
+let toastTimer;
+
+function toast(message){
+
+  const element = $("toast");
+
+  element.textContent = message;
+
+  element.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(()=>{
+
+    element.classList.remove("show");
+
+  },2300);
+
+}
+
+/* =========================
+   فتح القصة
+========================= */
+
+let currentStoryIndex = 0;
+let currentFontSize = 16;
+
+function openStory(index){
+
+  const stories = allStories();
+
+  const story = stories[index];
+
+  if(!story) return;
+
+  currentStoryIndex = index;
+
+  markAsRead(index);
+
+  $("modalTitle").textContent =
+    story.title;
+
+  $("modalBody").textContent =
+    story.full;
+
+  $("modalBody").style.fontSize =
+    currentFontSize + "px";
+
+  $("overlay").classList.add("active");
+
+}
+
+/* =========================
+   إنشاء بطاقة قصة
+========================= */
+
+function createStoryCard(story,index){
+
+  const card =
+    document.createElement("article");
+
+  card.className = "story-card";
+
+  const fallback =
+    placeholderImg(
+      story.seed || 100,
+      145,
+      170
+    );
+
+  const favorite =
+    isFavorite(index);
+
+  card.innerHTML = `
+
+    <button
+      class="favorite-btn ${favorite ? "active" : ""}"
+      title="إضافة للمفضلة">
+
+      ${favorite ? "♥" : "♡"}
+
+    </button>
+
+    <img
+      alt=""
+      loading="lazy">
+
+    <div class="story-content">
+
+      <h3></h3>
+
+      <p></p>
+
+      <button class="btn read-btn">
+        📖 اقرأ الآن
+      </button>
+
+    </div>
+  `;
+
+  const image =
+    card.querySelector("img");
+
+  image.src =
+    themedImg(
+      story.img || "abstract",
+      145,
+      170,
+      story.seed || index
+    );
+
+  image.alt =
+    story.title;
+
+  image.onerror =
+    function(){
+
+      this.onerror = null;
+
+      this.src = fallback;
+
+    };
+
+  card.querySelector("h3")
+    .textContent = story.title;
+
+  card.querySelector("p")
+    .textContent =
+      story.short ||
+      "قصة جديدة من موقع زيد النصيرات";
+
+  card.querySelector(".read-btn")
+    .onclick = () => {
+
+      openStory(index);
+
+    };
+
+  card.querySelector(".favorite-btn")
+    .onclick = event => {
+
+      event.stopPropagation();
+
+      toggleFavorite(index);
+
+    };
+
+  return card;
+
+}
+
+/* =========================
+   عرض القصص
+========================= */
+
+function renderStories(searchValue=""){
+
+  const container =
+    $("storyContainer");
+
+  container.innerHTML = "";
+
+  const query =
+    searchValue
+      .trim()
+      .toLowerCase();
+
+  let found = 0;
+
+  allStories().forEach(
+    (story,index)=>{
+
+      const searchable =
+        (
+          story.title +
+          " " +
+          (story.short || "") +
+          " " +
+          story.full
+        ).toLowerCase();
+
+      if(
+        !query ||
+        searchable.includes(query)
+      ){
+
+        container.appendChild(
+          createStoryCard(
+            story,
+            index
+          )
+        );
+
+        found++;
+
+      }
+
+    }
+  );
+
+  $("noResults").style.display =
+    found ? "none" : "block";
+
+}
+
+/* =========================
+   المفضلة
+========================= */
+
+function renderFavorites(){
+
+  const container =
+    $("favoriteContainer");
+
+  container.innerHTML = "";
+
+  let count = 0;
+
+  allStories().forEach(
+    (story,index)=>{
+
+      if(isFavorite(index)){
+
+        container.appendChild(
+          createStoryCard(
+            story,
+            index
+          )
+        );
+
+        count++;
+
+      }
+
+    }
+  );
+
+  $("favoriteEmpty").style.display =
+    count ? "none" : "block";
+
+}
+
+/* =========================
+   الإحصائيات
+========================= */
+
+function updateStats(){
+
+  $("storyCount").textContent =
+    allStories().length;
+
+  $("photoCount").textContent =
+    galleryTopics.length;
+
+  $("readCount").textContent =
+    getReadStories().length;
+
+  $("favCount").textContent =
+    getFavorites().length;
+
+}
+
+/* =========================
+   قصة اليوم
+========================= */
+
+function renderDailyStory(){
+
+  const stories =
+    allStories();
+
+  if(!stories.length) return;
+
+  const today =
+    Math.floor(
+      Date.now() / 86400000
+    );
+
+  const index =
+    today % stories.length;
+
+  const story =
+    stories[index];
+
+  $("dailyStory").innerHTML = `
+
+    <div class="feature">
+
+      <img
+        id="dailyImage"
+        alt="قصة اليوم">
+
+      <div>
+
+        <h2>
+          ${story.title}
+        </h2>
+
+        <p>
+          ${story.short}
+        </p>
+
+        <button
+          class="btn"
+          id="dailyReadBtn">
+
+          📖 اقرأ قصة اليوم
+
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  const image =
+    $("dailyImage");
+
+  image.src =
+    themedImg(
+      story.img || "abstract",
+      460,
+      360,
+      story.seed || 1
+    );
+
+  image.onerror =
+    function(){
+
+      this.onerror = null;
+
+      this.src =
+        placeholderImg(
+          story.seed || 1,
+          460,
+          360
+        );
+
+    };
+
+  $("dailyReadBtn").onclick =
+    () => openStory(index);
+
+}
+
+/* =========================
+   المعرض
+========================= */
+
+function buildGallery(){
+
+  const container =
+    $("galleryContainer");
+
+  container.innerHTML = "";
+
+  galleryTopics.forEach(
+    (topic,index)=>{
+
+      const image =
+        document.createElement("img");
+
+      image.src =
+        themedImg(
+          topic,
+          500,
+          350,
+          index + 1
+        );
+
+      image.alt =
+        "صورة من المعرض " +
+        (index + 1);
+
+      image.loading = "lazy";
+
+      image.onerror =
+        function(){
+
+          this.onerror = null;
+
+          this.src =
+            placeholderImg(
+              index + 1,
+              500,
+              350
+            );
+
+        };
+
+      image.onclick =
+        function(){
+
+          $("lightboxImg").src =
+            this.src;
+
+          $("lightbox").classList.add(
+            "active"
+          );
+
+        };
+
+      container.appendChild(image);
+
+    }
+  );
+
+}
+
+/* =========================
+   لوحة الإدارة
+========================= */
+
+function renderAdmin(){
+
+  const list =
+    $("adminList");
+
+  list.innerHTML = "";
+
+  getExtraStories().forEach(
+    (story,index)=>{
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "admin-item";
+
+      const title =
+        document.createElement("span");
+
+      title.textContent =
+        story.title;
+
+      const deleteButton =
+        document.createElement("button");
+
+      deleteButton.className =
+        "btn";
+
+      deleteButton.style.padding =
+        "6px 10px";
+
+      deleteButton.textContent =
+        "حذف";
+
+      deleteButton.onclick =
+        ()=>{
+
+          const stories =
+            getExtraStories();
+
+          stories.splice(index,1);
+
+          saveExtraStories(
+            stories
+          );
+
+          renderAdmin();
+
+          renderStories(
+            $("storySearch").value
+          );
+
+          renderFavorites();
+
+          renderDailyStory();
+
+          updateStats();
+
+          toast(
+            "🗑️ تم حذف القصة"
+          );
+
+        };
+
+      row.appendChild(title);
+      row.appendChild(deleteButton);
+
+      list.appendChild(row);
+
+    }
+  );
+
+}
+
+/* =========================
+   تشغيل الموقع
+========================= */
+
+function launchMainSite(name){
+
+  $("loginScreen").style.display =
+    "none";
+
+  $("successMsg").classList.remove(
+    "active"
+  );
+
+  $("bg-video").style.display =
+    "none";
+
+  $("mainSite").classList.add(
+    "active"
+  );
+
+  $("welcomeBanner").textContent =
+    "👋 أهلاً " + name;
+
+  $("homeDesc").textContent =
+    "يسعدنا وجودك يا " +
+    name +
+    "! استكشف مجموعتنا من القصص واستمتع برحلة القراءة.";
+
+  localStorage.setItem(
+    "zaid-username",
+    name
+  );
+
+  buildGallery();
+
+  renderStories();
+
+  renderFavorites();
+
+  renderDailyStory();
+
+  updateStats();
+
+  const sections =
+    document.querySelectorAll(
+      "#mainSite section"
+    );
+
+  function revealSections(){
+
+    const trigger =
+      window.innerHeight * .88;
+
+    sections.forEach(section=>{
+
+      if(
+        section.getBoundingClientRect()
+          .top < trigger
+      ){
+
+        section.classList.add(
+          "show"
+        );
+
+      }
+
+    });
+
+  }
+
+  window.addEventListener(
+    "scroll",
+    revealSections
+  );
+
+  revealSections();
+
+}
+
+/* =========================
+   تسجيل الدخول
+========================= */
+
+function login(){
+
+  const input =
+    $("usernameInput");
+
+  const name =
+    input.value.trim();
+
+  if(!name){
+
+    input.focus();
+
+    toast(
+      "⚠️ اكتب اسمك أولاً"
+    );
+
     return;
-  }
-  // صوت ترحيب
-  try { document.getElementById("welcomeSound").play(); } catch(e) {}
 
-  // إظهار رسالة النجاح
-  document.getElementById("welcomeName").textContent = name;
-  const successMsg = document.getElementById("successMsg");
-  successMsg.style.display = "flex";
+  }
+
+  $("welcomeName").textContent =
+    name;
+
+  $("successMsg").classList.add(
+    "active"
+  );
+
   let count = 3;
-  document.getElementById("countdown").textContent = count;
-  const iv = setInterval(() => {
-    count--;
-    document.getElementById("countdown").textContent = count;
-    if (count <= 0) {
-      clearInterval(iv);
-      launchMainSite(name);
-    }
-  }, 1000);
+
+  $("countdown").textContent =
+    count;
+
+  const interval =
+    setInterval(()=>{
+
+      count--;
+
+      $("countdown").textContent =
+        count;
+
+      if(count <= 0){
+
+        clearInterval(interval);
+
+        launchMainSite(name);
+
+      }
+
+    },1000);
+
 }
 
-function launchMainSite(name) {
-  // إخفاء شاشة الدخول والرسالة وإيقاف الفيديو
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("successMsg").style.display = "none";
-  document.getElementById("bg-video").style.display = "none";
-  document.getElementById("themeToggle").style.display = "none";
+/* =========================
+   عند تحميل الصفحة
+========================= */
 
-  // إظهار الموقع
-  const mainSite = document.getElementById("mainSite");
-  mainSite.classList.add("active");
+window.addEventListener(
+  "load",
+  ()=>{
 
-  // ترحيب شخصي
-  document.getElementById("welcomeBanner").textContent = "👋 أهلاً " + name;
-  document.getElementById("homeDesc").textContent =
-    "يسعدنا وجودك يا " + name + "! استكشف مجموعتنا من القصص الشيّقة واستمتع برحلة القراءة.";
+    setTimeout(()=>{
 
-  buildSite();
-}
+      $("loader").style.opacity =
+        "0";
 
-/* ===== بناء الموقع الرئيسي ===== */
-function buildSite() {
-  const galleryTopics = ["nature","travel","city","mountain","ocean","forest"];
-  const gc = document.getElementById("galleryContainer");
-  galleryTopics.forEach((topic, i) => {
-    const img = document.createElement("img");
-    img.src = themedImg(topic, 400, 300, i+1);
-    img.alt = "صورة " + (i+1);
-    img.onerror = function(){ this.onerror=null; this.src=placeholderImg(i+1,400,300); };
-    gc.appendChild(img);
-  });
+      setTimeout(()=>{
 
-  const sc = document.getElementById("storyContainer");
-  stories.forEach((s, i) => {
-    const card = document.createElement("div");
-    card.className = "story-card";
-    const fallback = placeholderImg(s.seed, 145, 145);
-    card.innerHTML = `
-      <img src="${themedImg(s.img,145,145,s.seed)}" alt="${s.title}" onerror="this.onerror=null;this.src='${fallback}';">
-      <div class="story-content">
-        <h3>${s.title}</h3>
-        <p>${s.short}</p>
-        <button class="btn" data-index="${i}">اقرأ الآن</button>
-      </div>`;
-    sc.appendChild(card);
-  });
+        $("loader").style.display =
+          "none";
 
-  // نافذة القصة
-  const overlay = document.getElementById("overlay");
-  sc.addEventListener("click", e => {
-    if (e.target.matches(".btn")) {
-      const s = stories[e.target.dataset.index];
-      document.getElementById("modalTitle").textContent = s.title;
-      document.getElementById("modalBody").textContent = s.full;
-      overlay.classList.add("active");
-    }
-  });
-  document.getElementById("closeModal").addEventListener("click", () => overlay.classList.remove("active"));
-  overlay.addEventListener("click", e => { if(e.target===overlay) overlay.classList.remove("active"); });
+        $("loginCard")
+          .classList.add(
+            "visible"
+          );
 
-  // ظهور الأقسام عند التمرير
-  const sections = document.querySelectorAll("#mainSite section");
-  function showSections() {
-    const trigger = window.innerHeight * 0.85;
-    sections.forEach(sec => { if(sec.getBoundingClientRect().top < trigger) sec.classList.add("show"); });
+      },600);
+
+    },900);
+
   }
-  window.addEventListener("scroll", showSections);
-  showSections();
+);
+
+/* =========================
+   زر الدخول
+========================= */
+
+$("enterBtn").onclick =
+  login;
+
+$("usernameInput").onkeydown =
+  event=>{
+
+    if(event.key === "Enter"){
+
+      login();
+
+    }
+
+  };
+
+/* =========================
+   الثيم
+========================= */
+
+if(
+  localStorage.getItem(
+    "zaid-theme"
+  ) === "light"
+){
+
+  document.body.classList.add(
+    "light-theme"
+  );
+
+  $("themeToggle").textContent =
+    "☀️";
+
 }
+
+$("themeToggle").onclick =
+  ()=>{
+
+    document.body.classList.toggle(
+      "light-theme"
+    );
+
+    const light =
+      document.body.classList.contains(
+        "light-theme"
+      );
+
+    $("themeToggle").textContent =
+      light ? "☀️" : "🌙";
+
+    localStorage.setItem(
+      "zaid-theme",
+      light ? "light" : "dark"
+    );
+
+  };
+
+/* =========================
+   البحث
+========================= */
+
+$("storySearch").oninput =
+  event=>{
+
+    renderStories(
+      event.target.value
+    );
+
+  };
+
+/* =========================
+   نافذة القصة
+========================= */
+
+$("closeModal").onclick =
+  ()=>{
+
+    $("overlay").classList.remove(
+      "active"
+    );
+
+  };
+
+$("overlay").onclick =
+  event=>{
+
+    if(event.target === $("overlay")){
+
+      $("overlay").classList.remove(
+        "active"
+      );
+
+    }
+
+  };
+
+/* =========================
+   تكبير وتصغير الخط
+========================= */
+
+$("fontUp").onclick =
+  ()=>{
+
+    currentFontSize =
+      Math.min(
+        30,
+        currentFontSize + 2
+      );
+
+    $("modalBody").style.fontSize =
+      currentFontSize + "px";
+
+  };
+
+$("fontDown").onclick =
+  ()=>{
+
+    currentFontSize =
+      Math.max(
+        12,
+        currentFontSize - 2
+      );
+
+    $("modalBody").style.fontSize =
+      currentFontSize + "px";
+
+  };
+
+/* =========================
+   نسخ القصة
+========================= */
+
+$("copyStory").onclick =
+  async ()=>{
+
+    const text =
+      $("modalTitle").textContent +
+      "\n\n" +
+      $("modalBody").textContent;
+
+    try{
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
+      toast(
+        "📋 تم نسخ القصة"
+      );
+
+    }catch(error){
+
+      toast(
+        "تعذر النسخ من المتصفح"
+      );
+
+    }
+
+  };
+
+/* =========================
+   مشاركة القصة
+========================= */
+
+$("shareStory").onclick =
+  async ()=>{
+
+    const title =
+      $("modalTitle").textContent;
+
+    if(
+      navigator.share
+    ){
+
+      try{
+
+        await navigator.share({
+
+          title:title,
+
+          text:
+            "اقرأ هذه القصة من موقع زيد النصيرات",
+
+          url:
+            window.location.href
+
+        });
+
+      }catch(error){
+
+        /* المستخدم أغلق نافذة المشاركة */
+
+      }
+
+    }else{
+
+      try{
+
+        await navigator.clipboard.writeText(
+          window.location.href
+        );
+
+        toast(
+          "🔗 تم نسخ رابط الموقع"
+        );
+
+      }catch(error){
+
+        toast(
+          "انسخ الرابط من شريط المتصفح"
+        );
+
+      }
+
+    }
+
+  };
+
+/* =========================
+   Lightbox
+========================= */
+
+$("lightboxClose").onclick =
+  ()=>{
+
+    $("lightbox").classList.remove(
+      "active"
+    );
+
+  };
+
+$("lightbox").onclick =
+  event=>{
+
+    if(
+      event.target ===
+      $("lightbox")
+    ){
+
+      $("lightbox").classList.remove(
+        "active"
+      );
+
+    }
+
+  };
+
+/* =========================
+   زر الرجوع للأعلى
+========================= */
+
+$("scrollTop").onclick =
+  ()=>{
+
+    window.scrollTo({
+
+      top:0,
+
+      behavior:"smooth"
+
+    });
+
+  };
+
+window.addEventListener(
+  "scroll",
+  ()=>{
+
+    $("scrollTop").classList.toggle(
+      "show",
+      window.scrollY > 500
+    );
+
+  }
+);
+
+/* =========================
+   قائمة الهاتف
+========================= */
+
+$("menuBtn").onclick =
+  ()=>{
+
+    $("nav").classList.toggle(
+      "open"
+    );
+
+  };
+
+document
+  .querySelectorAll("nav a")
+  .forEach(link=>{
+
+    link.onclick =
+      ()=>{
+
+        $("nav").classList.remove(
+          "open"
+        );
+
+      };
+
+  });
+
+/* =========================
+   لوحة الإدارة
+========================= */
+
+$("adminOpen").onclick =
+  ()=>{
+
+    $("adminPanel").classList.add(
+      "active"
+    );
+
+    renderAdmin();
+
+  };
+
+$("adminClose").onclick =
+  ()=>{
+
+    $("adminPanel").classList.remove(
+      "active"
+    );
+
+  };
+
+$("adminAdd").onclick =
+  ()=>{
+
+    const title =
+      $("adminTitle").value.trim();
+
+    const short =
+      $("adminShort").value.trim();
+
+    const full =
+      $("adminFull").value.trim();
+
+    if(!title || !full){
+
+      toast(
+        "⚠️ اكتب عنوان القصة والنص أولاً"
+      );
+
+      return;
+
+    }
+
+    const stories =
+      getExtraStories();
+
+    stories.push({
+
+      title:title,
+
+      short:
+        short ||
+        "قصة جديدة من موقع زيد النصيرات",
+
+      full:full,
+
+      img:"abstract",
+
+      seed:
+        100 + stories.length
+
+    });
+
+    saveExtraStories(
+      stories
+    );
+
+    $("adminTitle").value =
+      "";
+
+    $("adminShort").value =
+      "";
+
+    $("adminFull").value =
+      "";
+
+    renderAdmin();
+
+    renderStories(
+      $("storySearch").value
+    );
+
+    renderFavorites();
+
+    renderDailyStory();
+
+    updateStats();
+
+    toast(
+      "✅ تمت إضافة القصة بنجاح"
+    );
+
+  };
+
+/* =========================
+   ESC لإغلاق النوافذ
+========================= */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(event.key === "Escape"){
+
+      $("overlay").classList.remove(
+        "active"
+      );
+
+      $("lightbox").classList.remove(
+        "active"
+      );
+
+      $("adminPanel").classList.remove(
+        "active"
+      );
+
+      $("nav").classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+);
 </script>
+
 </body>
 </html>
+```
